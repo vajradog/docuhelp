@@ -1,0 +1,92 @@
+<p id="notice"><%= notice %></p>
+
+
+<div class="row">
+
+      <div class="col-md-3">
+
+        <div class="panel panel-info">
+
+          <div class="panel-heading"><h5>
+ <strong>Pages </strong> <small><%= @pages.size %></small>
+
+  </h5>
+          </div>
+          <div class="panel-body text-center">
+
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for title...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <% @pages.each do |page| %>
+            <strong><li class="list-group-item"><a href="hcc-health.html"><i class="fa fa-folder-o"></i>
+ <%= link_to page.title, page %></a> <small> 12 children</small></li>
+           </strong>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+<div class="col-md-9">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab" data-toggle="tab">Inner search</a></li>
+    <li role="presentation"><a href="#site" aria-controls="site" role="tab" data-toggle="tab">Outer search</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="page">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h5><strong><i class="fa fa-bolt"></i>Search within this page</strong></h5></div>
+        <div class="panel-body text-center">
+
+        <div class="input-group">
+        <div class="col-md-12">
+      <input type="text" class="form-control" placeholder="Keywords will be highlighted" id="word-search">
+    </div>
+
+
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+      </div>
+    </div> </div></div>
+
+    <div role="tabpanel" class="tab-pane" id="site">
+      <div class="panel panel-info">
+        <div class="panel-heading"><h5><strong><i class="fa fa-bolt"></i> Search the entire site</strong></h5></div>
+        <div class="panel-body text-center">
+
+        <div class="input-group">
+        <div class="col-md-12">
+      <input type="text" class="form-control" placeholder="Eg: Colgate, DNS">
+    </div>
+
+
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+  </div>
+
+
+
+
+  <h3><%= @page.title %></h3>
+  <p><%=raw @page.content %></p>
+   <%= @page.ancestry %>
+   <%= link_to 'Edit', edit_page_path(@page) %> | <%= link_to 'Destroy', @page, method: :delete, data: { confirm: 'Are you sure?' } %> <hr>
+<%= link_to 'Back', pages_path %>
+
+</section>
+
+

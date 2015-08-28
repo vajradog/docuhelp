@@ -1,0 +1,75 @@
+<div class="row">
+
+      <div class="col-md-3">
+
+        <div class="panel panel-info">
+
+          <div class="panel-heading"><h5>
+ <strong>Pages </strong> <small><%= @pages.size %></small>
+
+  </h5>
+          </div>
+          <div class="panel-body text-center">
+
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for title...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <% @pages.each do |page| %>
+            <strong><li class="list-group-item"><a href="hcc-health.html"><i class="fa fa-folder-o"></i>
+ <%= link_to page.title, page %></a> <small> 12 children</small></li>
+           </strong>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="col-md-9">
+        <div class="panel panel-info">
+                    <div class="panel-heading"><h5><strong><i class="fa fa-bolt"></i> Quick deep search</strong></h5></div>
+                    <div class="panel-body text-center">
+
+                        <div class="input-group">
+    <div class="col-md-12">
+<%= form_tag pages_path, method: :get do %>
+<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search entire site" %>
+
+       </div>
+      <span class="input-group-btn">
+        <%= submit_tag "Search", title: nil, class: "btn btn-default" %>
+
+      </span>
+      <% end %>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<% if @search_results.empty? %>
+  <em>Could not find result for <% @queries.each do |q| %> <strong><%= q %></strong> <% end %>, try searching something else.</em> <hr>
+  <% @pages.each do |page| %>
+  <h3><%= link_to page.title, page %></h3>
+  <%=raw page.content %>
+  <%= page.ancestry %> <br>
+  <% end %>
+
+
+
+
+<% else %>
+<% @search_results.each do |page| %>
+<h3><%= link_to page.title, page %></h3>
+<% if !@queries.present? %>
+<%=raw page.content %>
+<% else %>
+<%=raw highlight_query_results(page.content, @queries) %> <br>
+<% end %>
+<%= page.ancestry %> <br>
+<% end %><% end %>
