@@ -2,6 +2,8 @@ class Page < ActiveRecord::Base
   has_ancestry
   validates_presence_of :title, :content
 
+  belongs_to :user
+
   include PgSearch
   pg_search_scope :search, against: [:title, :content],
   using: {tsearch: {dictionary: "english"} }

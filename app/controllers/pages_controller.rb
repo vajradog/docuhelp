@@ -15,6 +15,7 @@ class PagesController < ApplicationController
 
   def create
     @page = Page.new(page_params)
+    @page.user = current_user
     if @page.save
       flash[:notice] = "Page saved"
       redirect_to pages_path
@@ -31,6 +32,7 @@ class PagesController < ApplicationController
   end
 
   def update
+
     if @page.update(page_params)
       flash[:notice] = "Page updated"
       redirect_to @page
