@@ -82,7 +82,7 @@
 
 
   <h3><%= @page.title %></h3>
-  <%= @page.created_at %> by <%= @page.user.username %> updated at <%= @page.updated_at%>
+  This page was <% if @page.versions.count < 1 %>created <% else %> updated <% end %> by <%= @page.user.username %> <%= time_ago_in_words(@page.updated_at) %> ago.
   <p><%=raw @page.content %></p>
    <%= @page.ancestry %>
    <%= link_to 'Edit', edit_page_path(@page) %> | <%= link_to 'Destroy', @page, method: :delete, data: { confirm: 'Are you sure?' } %> <hr>

@@ -19,6 +19,7 @@ gem 'pg_search'
 gem 'devise'
 gem 'paper_trail', '~> 4.0.0'
 gem 'diffy'
+gem 'figaro'
 
 
 group :development, :test do

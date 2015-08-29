@@ -11,3 +11,8 @@
 /log/*
 !/log/.keep
 /tmp
+config/idea_list.yml
+
+
+# Ignore application configuration
+/config/application.yml
