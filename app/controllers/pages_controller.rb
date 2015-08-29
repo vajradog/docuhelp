@@ -42,6 +42,16 @@ class PagesController < ApplicationController
     end
   end
 
+  def destroy
+    @page.destroy
+    flash[:notice] = "Page deleted"
+    redirect_to pages_path
+  end
+
+  def deleted
+    @pages = PageVersion.where(event: 'destroy')
+  end
+
 
   private
 

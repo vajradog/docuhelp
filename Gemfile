@@ -17,6 +17,8 @@ gem 'bootstrap-sass', '~> 3.3.5'
 gem 'rails_12factor'
 gem 'pg_search'
 gem 'devise'
+gem 'paper_trail', '~> 4.0.0'
+gem 'diffy'
 
 
 group :development, :test do

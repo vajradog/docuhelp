@@ -1,5 +1,7 @@
 class Page < ActiveRecord::Base
   has_ancestry
+  has_paper_trail class_name: 'PageVersion', meta: { author_username: :user_name, word_count: :count_word }
+
   validates_presence_of :title, :content
 
   belongs_to :user
@@ -14,6 +16,10 @@ class Page < ActiveRecord::Base
     else
       all
     end
+  end
+
+  def count_word
+    content.split(' ').count
   end
 
 

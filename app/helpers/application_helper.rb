@@ -10,4 +10,9 @@ module ApplicationHelper
     end
     temp
   end
+
+  def find_version_author_name(version)
+    user = User.find_version_author(version)
+    user ? user.username : ''
+  end
 end
