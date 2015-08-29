@@ -17,7 +17,7 @@
     <%- page.versions.reverse.each do |version| %>
       <tr>
         <td><%= version.index %></td>
-        <td><%= version.created_at %></td>
+        <td><%= time_ago_in_words(version.created_at) %> ago</td>
         <td><%= find_version_author_name(version) %></td>
         <td><%= version.event.humanize %></td>
         <td><%= version.word_count %></td>

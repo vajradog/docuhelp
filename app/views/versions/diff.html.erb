@@ -13,7 +13,7 @@
       </p>
     </div>
     <p>
-    <%= "Version authored by #{find_version_author_name(@version)} on #{@version.created_at} by '#{@version.event.humanize}'." %>
+    <%= "'#{@version.event.humanize}' by #{find_version_author_name(@version)} on #{@version.created_at.strftime("#{@version.created_at.day.ordinalize} of %B, %Y at %I:%M %p EST")}." %> <br>
     </p>
   </div>
 </div>
