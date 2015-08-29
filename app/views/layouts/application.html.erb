@@ -9,7 +9,6 @@
 
   <title>DocuHelp</title>
 
-
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -34,15 +33,29 @@
                 <li class="active"><%= link_to "Home", root_path %></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#clients">Clients</a></li>
                 <li><%= link_to "New Page", new_page_path %></li>
+
+            </ul>
+
+            <% if user_signed_in? %>
+                  <%= current_user.username %>
+                  <%= link_to "Edit Profile", edit_user_registration_path %> |
+                  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+                <% else %>
+                  <%= link_to "Sign Up", new_user_registration_path %> |
+                  <%= link_to "Login", new_user_session_path %>
+                <% end %>
+
+            <ul class="nav navbar-nav">
+               <li><a href="#contact" class="pull-right">Contact</a></li>
             </ul>
         </div>
         <!--/.navbar-collapse -->
     </div>
 </div>
 <div class="container">
+   <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
 <%= yield %>
 </div>
 

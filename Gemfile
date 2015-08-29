@@ -16,6 +16,7 @@ gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'rails_12factor'
 gem 'pg_search'
+gem 'devise'
 
 
 group :development, :test do
