@@ -5,43 +5,83 @@
 
       <div class="col-md-3">
 
+        <% if @page.parent.present? %>
+
         <div class="panel panel-info">
-
-          <div class="panel-heading"><h5>
- <strong>Pages </strong> <small><%= @pages.size %></small>
-
-  </h5>
+          <div class="panel-heading">
+            <h5><strong>Parent page</strong>
+          </h5>
           </div>
-          <div class="panel-body text-center">
-
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for title...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Go!</button>
-              </span>
-            </div>
-          </div>
-
           <ul class="list-group list-group-flush">
-            <% @pages.each do |page| %>
-            <strong><li class="list-group-item"><a href="hcc-health.html"><i class="fa fa-folder-o"></i>
- <%= link_to page.title, page %></a> <small> 12 children</small></li>
+            <strong><li class="list-group-item"><i class="fa fa-folder-o"></i>
+              <%= link_to @page.parent.title, @page.parent %></li>
            </strong>
-            <% end %>
           </ul>
         </div>
+        <% end %>
+
+<% if @page.descendants.present? %>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h5><strong>Subpages </strong> <small><%= @page.descendants.size %></small></h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <% @page.descendants.each do |page| %>
+        <strong><li class="list-group-item"><i class="fa fa-file-o"></i>
+        <%= link_to page.title, page %></li>
+        </strong>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+      <h5><strong>Frequently requested info </strong></h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><i class="fa fa-info-circle"></i>
+      Something Something</li>
+      <li class="list-group-item"><i class="fa fa-plus-square"></i>
+      Add more info</li>
+    </ul>
+  </div>
+
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h5><strong>Page info </strong></h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+      Created on <%= "#{@page.created_at.strftime("#{@page.created_at.day.ordinalize} of %B, %Y")}" %> <br><small></small></li>
+
+      <% if !@page.versions.empty? %>
+        <li class="list-group-item">
+        Last changed: <%= "#{@page.updated_at.strftime("#{@page.updated_at.day.ordinalize} of %B, %Y")}" %> <br>
+        <small>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></li>
+      <% end %>
+
+
+      <li class="list-group-item">
+      <%= link_to 'Edit Page', edit_page_path(@page) %> | <%= link_to 'Delete Page', @page, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    </ul>
+  </div>
+
       </div>
 
 <div class="col-md-9">
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab" data-toggle="tab">Inner search</a></li>
+
+    <% if !@page.versions.empty? %>
+    <li role="presentation"><a href="#version" aria-controls="version" role="tab" data-toggle="tab">Previous versions <small>( <%= @page.versions.count %> )</small></a></li> <% end %>
     <li role="presentation"><a href="#site" aria-controls="site" role="tab" data-toggle="tab">Outer search</a></li>
   </ul>
 
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="page">
     <div class="panel panel-info">
-        <div class="panel-heading"><h5><strong><i class="fa fa-bolt"></i>Search within this page</strong></h5></div>
+        <div class="panel-heading"><h5><strong><i class="fa fa-sticky-note"></i> Search within this page</strong></h5></div>
         <div class="panel-body text-center">
 
         <div class="input-group">
@@ -55,6 +95,17 @@
       </span>
       </div>
     </div> </div></div>
+
+    <div role="tabpanel" class="tab-pane" id="version">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h5><strong><i class="fa fa-server"></i></i> Previous versions of this page</strong></h5></div>
+
+        <div class="col-md-12">
+
+<%= render 'versions', page: @page %>
+
+    </div> </div></div>
+
 
     <div role="tabpanel" class="tab-pane" id="site">
       <div class="panel panel-info">
@@ -79,16 +130,11 @@
   </div>
 
 
-
-
   <h3><%= @page.title %></h3>
-  This page was <% if @page.versions.count < 1 %>created <% else %> updated <% end %> by <%= @page.user.username %> <%= time_ago_in_words(@page.updated_at) %> ago.
   <p><%=raw @page.content %></p>
-   <%= @page.ancestry %>
-   <%= link_to 'Edit', edit_page_path(@page) %> | <%= link_to 'Destroy', @page, method: :delete, data: { confirm: 'Are you sure?' } %> <hr>
-<%= link_to 'Back', pages_path %>
+
+   <hr>
 
 </section>
 
-<%= render 'versions', page: @page %>
 

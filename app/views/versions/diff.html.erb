@@ -4,7 +4,7 @@
     <style><%= Diffy::CSS %></style>
     <div class='well diff'>
       <p>
-        <strong>Name:</strong>
+        <strong>Title:</strong>
         <%= diff(@version.reify.title, @page.title) %>
       </p>
       <p>
@@ -21,3 +21,5 @@
   <%= link_to 'Back', edit_page_path(@page), class: 'btn btn-danger' %>
   <%= link_to 'Rollback', rollback_page_version_path(@page, @version), class: 'btn btn-primary', method: 'PATCH' %>
 </div>
+
+

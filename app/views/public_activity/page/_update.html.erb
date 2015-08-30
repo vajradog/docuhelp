@@ -1,0 +1,6 @@
+<i class="fa fa-pencil-square-o"></i>
+
+<% if activity.trackable %><%= activity.owner.username if activity.owner %> updated the page:
+<strong><%= link_to activity.trackable.title, activity.trackable %></strong>
+<% else %>
+A file was deleted by <%= activity.owner.username if activity.owner %>.<%= link_to ' Click here to learn more or recover the file', deleted_pages_path %><% end %>

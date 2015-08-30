@@ -10,4 +10,10 @@ module PagesHelper
                              include_diff_info: true)
     changes.to_s.present? ? changes.to_s(:html).html_safe : 'No Changes'
   end
+
+
+
+  #paper trail
+
+
 end

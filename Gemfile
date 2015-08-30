@@ -22,6 +22,8 @@ gem 'diffy'
 gem 'figaro'
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem 'public_activity'
+gem "font-awesome-rails"
 
 group :development, :test do
   gem 'byebug'

@@ -1,4 +1,7 @@
 class Page < ActiveRecord::Base
+  include PublicActivity::Model
+  tracked owner: ->(controller, model) { controller && controller.current_user }
+
   has_ancestry
   has_paper_trail class_name: 'PageVersion', meta: { author_username: :user_name, word_count: :count_word }
 

@@ -20,9 +20,9 @@
           </div>
 
           <ul class="list-group list-group-flush">
-            <% @pages.each do |page| %>
-            <strong><li class="list-group-item"><a href="hcc-health.html"><i class="fa fa-folder-o"></i>
- <%= link_to page.title, page %></a> <small> 12 children</small></li>
+            <% Page.roots.each do |page| %>
+            <strong><li class="list-group-item"><i class="fa fa-folder-o"></i>
+ <%= link_to page.title, page %><small> <%= page.descendants.count %> </small></li>
            </strong>
             <% end %>
           </ul>
@@ -73,3 +73,6 @@
 <% end %>
 <%= page.ancestry %> <br>
 <% end %><% end %>
+
+<hr>
+
