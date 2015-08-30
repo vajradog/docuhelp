@@ -8,6 +8,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :title, :content
 
   belongs_to :user
+  has_many :freq_infos
 
   include PgSearch
   pg_search_scope :search, against: [:title, :content],

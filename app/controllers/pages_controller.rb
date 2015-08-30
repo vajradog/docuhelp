@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_action :authenticate_user!, except: [:show, :index]
   before_filter :set_page, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -29,6 +30,8 @@ class PagesController < ApplicationController
 
   def show
     @pages = Page.all
+    @freq_infos = @page.freq_infos.all
+    #@freq_info = @page.freq_infos.build
   end
 
   def update

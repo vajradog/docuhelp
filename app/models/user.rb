@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   validates :username, presence: true, uniqueness: true
 
   has_many :pages
+  has_many :freq_infos
   def self.find_version_author(version)
     find(version.terminator)
   end

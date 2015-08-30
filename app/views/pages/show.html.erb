@@ -35,17 +35,33 @@
   </div>
 <% end %>
 
+
+
 <div class="panel panel-info">
-    <div class="panel-heading">
-      <h5><strong>Frequently requested info </strong></h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"><i class="fa fa-info-circle"></i>
-      Something Something</li>
-      <li class="list-group-item"><i class="fa fa-plus-square"></i>
-      Add more info</li>
-    </ul>
+  <div class="panel-heading">
+    <h5><strong>Frequently requested info </strong></h5>
   </div>
+  <ul class="list-group list-group-flush">
+    <% @freq_infos.each do |info|%>
+    <li class="list-group-item"><i class="fa fa-hand-o-right"></i>
+    <%= info.content %></li>
+    <% end %>
+
+ <%= form_for [@page, FreqInfo.new]  do |f| %>
+     <div class="panel-body text-center">
+        <div class="input-group">
+        <div class="col-md-12">
+      <%= f.text_field :content, class: "form-control", type: "text", placeholder: "Add a quick info" %>
+    </div>
+      <span class="input-group-btn">
+        <%= f.submit "Add!", class: "btn btn-default" %>
+      </span>
+      </div>
+    </div>
+    <% end %>
+</div>
+
+
 
   <div class="panel panel-info">
     <div class="panel-heading">
@@ -116,8 +132,6 @@
         <div class="col-md-12">
       <input type="text" class="form-control" placeholder="Eg: Colgate, DNS">
     </div>
-
-
       <span class="input-group-btn">
         <button class="btn btn-default" type="button">Go!</button>
       </span>

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :activities
 
   resources :pages do
+    resources :freq_infos
+
     collection do
       get :deleted # <= this
     end
