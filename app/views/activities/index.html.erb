@@ -1,9 +1,13 @@
 <h1>Activities#index</h1>
 <p>Find me in app/views/activities/index.html.erb</p>
-
+<table class="table table-striped">
 <% @activities.each do |activity| %>
- <div class="activity">
 
+    <tr>
  <%= render_activity activity %>
-  </div>
+ </tr>
+
 <% end %>
+</table>
+
+<%= will_paginate @activities %>

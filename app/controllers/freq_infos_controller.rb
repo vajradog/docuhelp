@@ -13,6 +13,14 @@ class FreqInfosController < ApplicationController
     end
   end
 
+  def destroy
+    @page = Page.find(params[:page_id])
+    @freq_info = @page.freq_infos.find(params[:id])
+    @freq_info.delete
+    flash[:notice] = "Info deleted"
+    redirect_to page_path
+  end
+
   private
 
   def freq_info_params

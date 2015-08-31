@@ -1,6 +1,3 @@
-<p id="notice"><%= notice %></p>
-
-
 <div class="row">
 
       <div class="col-md-3">
@@ -27,7 +24,7 @@
     </div>
     <ul class="list-group list-group-flush">
       <% @page.descendants.each do |page| %>
-        <strong><li class="list-group-item"><i class="fa fa-file-o"></i>
+        <strong><li class="list-group-item"><i class="fa fa-file-o" style="color:gray"></i>
         <%= link_to page.title, page %></li>
         </strong>
       <% end %>
@@ -43,8 +40,15 @@
   </div>
   <ul class="list-group list-group-flush">
     <% @freq_infos.each do |info|%>
-    <li class="list-group-item"><i class="fa fa-hand-o-right"></i>
-    <%= info.content %></li>
+    <li class="list-group-item"><i class="fa fa-hand-o-right" style="color:gray"></i>
+    <%= info.content %> <br><small><em>by <%= info.user.username %></em></small> | <%= link_to "Delete", [@page, info, @freq_info], :confirm => "Are you sure you want to delete this attachment?", :method => :delete, :action => "destroy" %>
+
+   </li>
+
+
+
+
+ </li>
     <% end %>
 
  <%= form_for [@page, FreqInfo.new]  do |f| %>
@@ -74,7 +78,7 @@
       <% if !@page.versions.empty? %>
         <li class="list-group-item">
         Last changed: <%= "#{@page.updated_at.strftime("#{@page.updated_at.day.ordinalize} of %B, %Y")}" %> <br>
-        <small>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></li>
+        <small><em>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></em></li>
       <% end %>
 
 

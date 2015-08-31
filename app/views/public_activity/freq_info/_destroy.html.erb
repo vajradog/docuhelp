@@ -1,10 +1,14 @@
-    <td><i class="fa fa-trash fa-2x" style="color:gray"></i></td>
+<table class="table table-striped">
+  <tr>
+    <td><i class="fa fa-info-circle fa-2x" style="color:gray"></i></td>
     <td><small> <%= time_ago_in_words(activity.created_at) %></small> <br>
       <% if activity.trackable %>
         <%= activity.owner.username if activity.owner %>
-        <strong>deleted <em>but brought back</em> the page titled:</strong>
-        <strong><%= link_to activity.trackable.title, activity.trackable %></strong>
+        <strong>deleted</strong> a frequently requested info page:
+        <strong><%= link_to activity.trackable.page.title, activity.trackable.page %></strong>
       <% else %>
         A file was deleted by <%= activity.owner.username if activity.owner %>.<%= link_to ' Click here to learn more or recover the file', deleted_pages_path %>
       <% end %>
     </td>
+  </tr>
+</table>

@@ -1,6 +1,10 @@
-<i class="fa fa-pencil-square-o"></i>
-
-<% if activity.trackable %><%= activity.owner.username if activity.owner %> updated the page:
-<strong><%= link_to activity.trackable.title, activity.trackable %></strong>
-<% else %>
-A file was deleted by <%= activity.owner.username if activity.owner %>.<%= link_to ' Click here to learn more or recover the file', deleted_pages_path %><% end %>
+    <td><i class="fa fa-pencil-square-o fa-2x" style="color:gray"></i></td>
+    <td><small> <%= time_ago_in_words(activity.created_at) %></small> <br>
+      <% if activity.trackable %>
+        <%= activity.owner.username if activity.owner %>
+        <strong>updated</strong> the page:
+        <strong><%= link_to activity.trackable.title, activity.trackable %></strong>
+      <% else %>
+        A file was deleted by <%= activity.owner.username if activity.owner %>.<%= link_to ' Click here to learn more or recover the file', deleted_pages_path %>
+      <% end %>
+    </td>

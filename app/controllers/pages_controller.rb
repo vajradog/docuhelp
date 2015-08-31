@@ -30,7 +30,7 @@ class PagesController < ApplicationController
 
   def show
     @pages = Page.all
-    @freq_infos = @page.freq_infos.all
+    @freq_infos = @page.freq_infos.all.order("created_at desc")
     #@freq_info = @page.freq_infos.build
   end
 
