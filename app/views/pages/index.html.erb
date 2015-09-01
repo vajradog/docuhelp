@@ -21,13 +21,21 @@
 
           <ul class="list-group list-group-flush">
             <% Page.roots.each do |page| %>
-            <strong><li class="list-group-item"><i class="fa fa-folder-o" style="color:gray"></i>
- <%= link_to page.title, page %><small> <%= page.descendants.count %> </small></li>
+            <strong><li class="list-group-item">
+              <% if page.descendants.count < 1 %>
+              <i class="fa fa-file-o" style="color:gray"></i>
+              <% else %>
+              <i class="fa fa-folder" style="color:gray"></i>
+              <% end %>
+
+
+ <%= link_to page.title, page %><small> <%= page.descendants.count if page.descendants.count > 0 %></small></li>
            </strong>
             <% end %>
           </ul>
         </div>
       </div>
+
 
 
       <div class="col-md-9">
@@ -52,27 +60,61 @@
   </div>
 </section>
 
+
+
 <% if @search_results.empty? %>
-  <em>Could not find result for <% @queries.each do |q| %> <strong><%= q %></strong> <% end %>, try searching something else.</em> <hr>
-  <% @pages.each do |page| %>
-  <h3><%= link_to page.title, page %></h3>
-  <%=raw page.content %>
-  <%= page.ancestry %> <br>
+  <p style="color:red"><em>Could not find results for
+  <% @queries.each do |q| %>
+    <strong><%= q %></strong>
+  <% end %>, try searching something else.</em> </p> <hr>
+<% @pages.each do |page| %>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4><strong>
+        <%= link_to page.title, page %></strong></h4>
+      </div>
+      <div class="panel-body">
+        <%=raw page.content.truncate(600) %>
+      </div>
+    </div>
   <% end %>
 
+<% elsif @queries.present? %>
+  <% @search_results.each do |page| %>
 
+   <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4><strong>
+        <%= link_to page.title, page %></strong></h4>
+      </div>
+      <div class="panel-body">
+        <%=raw highlight_query_results(page.content, @queries) %>
+      </div>
+    </div>
+     <% end %>
 
 
 <% else %>
-<% @search_results.each do |page| %>
-<h3><%= link_to page.title, page %></h3>
-<% if !@queries.present? %>
-<%=raw page.content %>
-<% else %>
-<%=raw highlight_query_results(page.content, @queries) %> <br>
-<% end %>
-<%= page.ancestry %> <br>
-<% end %><% end %>
 
-<hr>
+
+    <div class="panel panel-info">
+
+      <div class="panel-heading">
+        <h5><strong><i class="fa fa-circle-o-notch fa-spin"></i>
+          Recent Activities</strong></h5>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-striped">
+              <% @activities.each do |activity| %>
+                <tr><%= render_activity activity %></tr>
+              <% end %>
+            </table>
+
+            <%= button_to "more activities", activities_path, method: :get, class: "btn btn-default btn-block" %>
+            <% end %>
+        </div>
+    </div>
+
+
 

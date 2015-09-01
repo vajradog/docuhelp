@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :activities
 
   resources :pages do
-    resources :freq_infos
+    resources :freq_infos, except: [:edit, :update]
 
     collection do
       get :deleted # <= this

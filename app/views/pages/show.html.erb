@@ -40,8 +40,14 @@
   </div>
   <ul class="list-group list-group-flush">
     <% @freq_infos.each do |info|%>
-    <li class="list-group-item"><i class="fa fa-hand-o-right" style="color:gray"></i>
-    <%= info.content %> <br><small><em>by <%= info.user.username %></em></small> | <%= link_to "Delete", [@page, info, @freq_info], :confirm => "Are you sure you want to delete this attachment?", :method => :delete, :action => "destroy" %>
+    <li class="list-group-item">
+    <%= info.content %>
+
+   <%= link_to [@page, info, @freq_info], :method => :delete, data: { confirm: 'Are you sure?' },  :action => "destroy", :commit =>"destroy" do  %>
+ <i class="fa fa-trash-o" style="color:gray"></i>
+   <% end %>
+
+
 
    </li>
 
@@ -54,7 +60,7 @@
  <%= form_for [@page, FreqInfo.new]  do |f| %>
      <div class="panel-body text-center">
         <div class="input-group">
-        <div class="col-md-12">
+        <div class="col-12">
       <%= f.text_field :content, class: "form-control", type: "text", placeholder: "Add a quick info" %>
     </div>
       <span class="input-group-btn">
@@ -73,12 +79,12 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-      Created on <%= "#{@page.created_at.strftime("#{@page.created_at.day.ordinalize} of %B, %Y")}" %> <br><small></small></li>
+      Created on <small><%= "#{@page.created_at.strftime("#{@page.created_at.day.ordinalize} %B, %Y")}" %></small></li>
 
       <% if !@page.versions.empty? %>
         <li class="list-group-item">
-        Last changed: <%= "#{@page.updated_at.strftime("#{@page.updated_at.day.ordinalize} of %B, %Y")}" %> <br>
-        <small><em>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></em></li>
+        Updated:<small> <%= "#{@page.updated_at.strftime("#{@page.updated_at.day.ordinalize} %B, %Y")}" %> <br>
+        <em>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></em></li>
       <% end %>
 
 
@@ -133,12 +139,16 @@
         <div class="panel-body text-center">
 
         <div class="input-group">
-        <div class="col-md-12">
-      <input type="text" class="form-control" placeholder="Eg: Colgate, DNS">
-    </div>
+       <div class="col-md-12">
+<%= form_tag pages_path, method: :get do %>
+<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search entire site" %>
+
+       </div>
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
+        <%= submit_tag "Search", title: nil, class: "btn btn-default" %>
+
       </span>
+      <% end %>
       </div>
 
     </div>
@@ -147,11 +157,16 @@
 </div>
   </div>
 
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4><strong>
+          <%= @page.title %></strong></h4>
+        </div>
 
-  <h3><%= @page.title %></h3>
-  <p><%=raw @page.content %></p>
-
-   <hr>
+        <div class="panel-body">
+          <%=raw @page.content %>
+        </div>
+    </div>
 
 </section>
 

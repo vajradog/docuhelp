@@ -25,6 +25,7 @@ gem 'bootstrap-will_paginate'
 gem 'public_activity'
 gem "font-awesome-rails"
 
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'

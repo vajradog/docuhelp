@@ -3,8 +3,10 @@ class PagesController < ApplicationController
   before_filter :set_page, only: [:show, :edit, :update, :destroy]
 
   def index
-    @pages = Page.all
+    @pages = Page.order("created_at desc").page(params[:page]).per_page(5)
     @search_results = Page.text_search(params[:query])
+    @activities =  PublicActivity::Activity.order("created_at desc").limit(10)
+
     if params[:query]
       @queries = params[:query].split(' ')
     end
