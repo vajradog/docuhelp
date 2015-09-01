@@ -1,10 +1,10 @@
-    <td><i class="fa fa-info-circle fa-2x" style="color:gray"></i></td>
-    <td><small> <%= time_ago_in_words(activity.created_at) %></small> <br>
-      <% if activity.trackable %>
-        <%= activity.owner.username if activity.owner %>
-        <strong>added</strong> a frequently requested info to the page:
-        <strong><%= link_to activity.trackable.page.title, activity.trackable.page %></strong>
-      <% else %>
-        A frequently requested info was deleted by <strong><%= activity.owner.username if activity.owner %>.</strong>
-      <% end %>
-    </td>
+<td><i class="fa fa-info-circle fa-2x" style="color:gray"></i></td>
+<td><small> <%= time_ago_in_words(activity.created_at) %> ago</small> <br>
+  <% if activity.trackable %>
+    <%= activity.owner.username if activity.owner %>
+    <strong>added</strong> a frequently requested info to the page:
+    <strong><%= link_to activity.trackable.page.title, activity.trackable.page %></strong>
+  <% else %>
+    A frequently requested info was deleted by <strong><%= activity.owner.username if activity.owner %>.</strong>
+  <% end %>
+</td>

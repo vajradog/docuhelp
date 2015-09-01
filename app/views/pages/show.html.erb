@@ -1,173 +1,155 @@
 <div class="row">
+  <div class="col-md-3">
 
-      <div class="col-md-3">
-
-        <% if @page.parent.present? %>
-
-        <div class="panel panel-info">
-          <div class="panel-heading">
-            <h5><strong>Parent page</strong>
-          </h5>
-          </div>
-          <ul class="list-group list-group-flush">
-            <strong><li class="list-group-item"><i class="fa fa-folder-o"></i>
-              <%= link_to @page.parent.title, @page.parent %></li>
-           </strong>
-          </ul>
-        </div>
-        <% end %>
-
-<% if @page.descendants.present? %>
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h5><strong>Subpages </strong> <small><%= @page.descendants.size %></small></h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <% @page.descendants.each do |page| %>
-        <strong><li class="list-group-item"><i class="fa fa-file-o" style="color:gray"></i>
-        <%= link_to page.title, page %></li>
-        </strong>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-
-
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h5><strong>Frequently requested info </strong></h5>
-  </div>
-  <ul class="list-group list-group-flush">
-    <% @freq_infos.each do |info|%>
-    <li class="list-group-item">
-    <%= info.content %>
-
-   <%= link_to [@page, info, @freq_info], :method => :delete, data: { confirm: 'Are you sure?' },  :action => "destroy", :commit =>"destroy" do  %>
- <i class="fa fa-trash-o" style="color:gray"></i>
-   <% end %>
-
-
-
-   </li>
-
-
-
-
- </li>
-    <% end %>
-
- <%= form_for [@page, FreqInfo.new]  do |f| %>
-     <div class="panel-body text-center">
-        <div class="input-group">
-        <div class="col-12">
-      <%= f.text_field :content, class: "form-control", type: "text", placeholder: "Add a quick info" %>
-    </div>
-      <span class="input-group-btn">
-        <%= f.submit "Add!", class: "btn btn-default" %>
-      </span>
-      </div>
-    </div>
-    <% end %>
-</div>
-
-
-
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h5><strong>Page info </strong></h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-      Created on <small><%= "#{@page.created_at.strftime("#{@page.created_at.day.ordinalize} %B, %Y")}" %></small></li>
-
-      <% if !@page.versions.empty? %>
-        <li class="list-group-item">
-        Updated:<small> <%= "#{@page.updated_at.strftime("#{@page.updated_at.day.ordinalize} %B, %Y")}" %> <br>
-        <em>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></em></li>
-      <% end %>
-
-
-      <li class="list-group-item">
-      <%= link_to 'Edit Page', edit_page_path(@page) %> | <%= link_to 'Delete Page', @page, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-    </ul>
-  </div>
-
-      </div>
-
-<div class="col-md-9">
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab" data-toggle="tab">Inner search</a></li>
-
-    <% if !@page.versions.empty? %>
-    <li role="presentation"><a href="#version" aria-controls="version" role="tab" data-toggle="tab">Previous versions <small>( <%= @page.versions.count %> )</small></a></li> <% end %>
-    <li role="presentation"><a href="#site" aria-controls="site" role="tab" data-toggle="tab">Outer search</a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="page">
-    <div class="panel panel-info">
-        <div class="panel-heading"><h5><strong><i class="fa fa-sticky-note"></i> Search within this page</strong></h5></div>
-        <div class="panel-body text-center">
-
-        <div class="input-group">
-        <div class="col-md-12">
-      <input type="text" class="form-control" placeholder="Keywords will be highlighted" id="word-search">
-    </div>
-
-
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
-      </span>
-      </div>
-    </div> </div></div>
-
-    <div role="tabpanel" class="tab-pane" id="version">
-    <div class="panel panel-info">
-        <div class="panel-heading"><h5><strong><i class="fa fa-server"></i></i> Previous versions of this page</strong></h5></div>
-
-        <div class="col-md-12">
-
-<%= render 'versions', page: @page %>
-
-    </div> </div></div>
-
-
-    <div role="tabpanel" class="tab-pane" id="site">
+    <% if @page.parent.present? %>
       <div class="panel panel-info">
-        <div class="panel-heading"><h5><strong><i class="fa fa-bolt"></i> Search the entire site</strong></h5></div>
-        <div class="panel-body text-center">
-
-        <div class="input-group">
-       <div class="col-md-12">
-<%= form_tag pages_path, method: :get do %>
-<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search entire site" %>
-
-       </div>
-      <span class="input-group-btn">
-        <%= submit_tag "Search", title: nil, class: "btn btn-default" %>
-
-      </span>
-      <% end %>
+        <div class="panel-heading">
+          <h5><strong>Parent page</strong></h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <strong><li class="list-group-item"><i class="fa fa-folder-o"></i>
+            <%= link_to @page.parent.title, @page.parent %></li>
+          </strong>
+        </ul>
       </div>
+    <% end %>
 
-    </div>
-  </div>
-
-</div>
-  </div>
+    <% if @page.descendants.present? %>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h5><strong>Subpages </strong> <small><%= @page.descendants.size %></small></h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @page.descendants.each do |page| %>
+            <strong><li class="list-group-item"><i class="fa fa-file-o" style="color:gray"></i>
+            <%= link_to page.title, page %></li>
+            </strong>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h4><strong>
-          <%= @page.title %></strong></h4>
-        </div>
+        <h5><strong>Frequently requested info </strong></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @freq_infos.each do |info|%>
+          <li class="list-group-item">
+          <%= info.content %>
+          <%= link_to [@page, info, @freq_info], :method => :delete, data: { confirm: 'Are you sure?' },  :action => "destroy", :commit =>"destroy" do  %>
+          <i class="fa fa-trash-o" style="color:gray"></i>
+          <% end %></li>
+        <% end %>
 
-        <div class="panel-body">
-          <%=raw @page.content %>
-        </div>
+        <%= form_for [@page, FreqInfo.new]  do |f| %>
+          <div class="panel-body text-center">
+            <div class="input-group">
+              <div class="col-12">
+                <%= f.text_field :content, class: "form-control", type: "text", placeholder: "Add a quick info" %>
+              </div>
+              <span class="input-group-btn">
+                <%= f.submit "Add!", class: "btn btn-default" %>
+              </span>
+            </div>
+          </div>
+        <% end %>
+      </ul>
     </div>
 
-</section>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h5><strong>Page info </strong></h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+        Created on <small><%= "#{@page.created_at.strftime("#{@page.created_at.day.ordinalize} %B, %Y")}" %></small></li>
+
+        <% if !@page.versions.empty? %>
+          <li class="list-group-item">
+          Updated:<small> <%= "#{@page.updated_at.strftime("#{@page.updated_at.day.ordinalize} %B, %Y")}" %> <br>
+          <em>by <%= User.find_by_id(@page.versions.last.whodunnit).username %></small></em></li>
+        <% end %>
+        <li class="list-group-item">
+          <%= link_to 'Edit Page', edit_page_path(@page) %> | <%= link_to 'Delete Page', @page, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab" data-toggle="tab">Inner search</a></li>
+      <% if !@page.versions.empty? %>
+        <li role="presentation"><a href="#version" aria-controls="version" role="tab" data-toggle="tab">Previous versions <small>( <%= @page.versions.count %> )</small></a></li> <% end %>
+        <li role="presentation"><a href="#site" aria-controls="site" role="tab" data-toggle="tab">Outer search</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div role="tabpanel" class="tab-pane active" id="page">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h5><strong><i class="fa fa-sticky-note"></i> Search within this page</strong></h5>
+          </div>
+
+          <div class="panel-body text-center">
+            <div class="input-group">
+              <div class="col-md-12">
+                <input type="text" class="form-control" placeholder="Keywords will be highlighted" id="word-search">
+              </div>
+
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Go!</button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane" id="version">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h5><strong><i class="fa fa-server"></i></i> Previous versions of this page</strong></h5>
+          </div>
+          <div class="col-md-12">
+            <%= render 'versions', page: @page %>
+          </div>
+        </div>
+      </div>
+
+
+      <div role="tabpanel" class="tab-pane" id="site">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h5><strong><i class="fa fa-bolt"></i> Search the entire site</strong></h5>
+          </div>
+          <div class="panel-body text-center">
+            <div class="input-group">
+              <div class="col-md-12">
+                <%= form_tag pages_path, method: :get do %>
+                  <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search entire site" %>
+              </div>
+                  <span class="input-group-btn">
+                    <%= submit_tag "Search", title: nil, class: "btn btn-default" %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4><strong><%= @page.title %></strong></h4>
+      </div>
+      <div class="panel-body">
+        <%=raw @page.content %>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 

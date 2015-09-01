@@ -1,14 +1,12 @@
 <h2><%= @page.new_record? ? 'Create a new page' : 'Edit page' %></h2>
-
 <%= form_for(@page) do |f| %>
   <% if @page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
-
       <ul>
-      <% @page.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @page.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -20,7 +18,7 @@
     <%= f.label :content %><br>
     <%= f.cktext_area :content, placeholder: " Enter the page contents here" %>
   </div>
-<br>
+  <br>
   <div class="field">
     <%= f.label :parent_id, "Select parent page or leave empty if create a parent page" %><br>
     <%= f.collection_select :parent_id, Page.order(:title), :id, :title, include_blank: true %>

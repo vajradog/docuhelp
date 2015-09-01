@@ -1,120 +1,102 @@
 <div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h5><strong>Pages </strong> <small><%= @pages.size %></small></h5>
+      </div>
 
-      <div class="col-md-3">
-
-        <div class="panel panel-info">
-
-          <div class="panel-heading"><h5>
- <strong>Pages </strong> <small><%= @pages.size %></small>
-
-  </h5>
-          </div>
-          <div class="panel-body text-center">
-
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for title...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Go!</button>
-              </span>
-            </div>
-          </div>
-
-          <ul class="list-group list-group-flush">
-            <% Page.roots.each do |page| %>
-            <strong><li class="list-group-item">
-              <% if page.descendants.count < 1 %>
-              <i class="fa fa-file-o" style="color:gray"></i>
-              <% else %>
-              <i class="fa fa-folder" style="color:gray"></i>
-              <% end %>
-
-
- <%= link_to page.title, page %><small> <%= page.descendants.count if page.descendants.count > 0 %></small></li>
-           </strong>
-            <% end %>
-          </ul>
+      <div class="panel-body text-center">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for title...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
         </div>
       </div>
 
-
-
-      <div class="col-md-9">
-        <div class="panel panel-info">
-                    <div class="panel-heading"><h5><strong><i class="fa fa-bolt"></i> Quick deep search</strong></h5></div>
-                    <div class="panel-body text-center">
-
-                        <div class="input-group">
-    <div class="col-md-12">
-<%= form_tag pages_path, method: :get do %>
-<%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search entire site" %>
-
-       </div>
-      <span class="input-group-btn">
-        <%= submit_tag "Search", title: nil, class: "btn btn-default" %>
-
-      </span>
-      <% end %>
-      </div>
-
+      <ul class="list-group list-group-flush">
+        <% Page.roots.each do |page| %>
+          <li class="list-group-item"><strong>
+          <% if page.descendants.count < 1 %>
+            <i class="fa fa-file-o" style="color:gray"></i>
+          <% else %>
+            <i class="fa fa-folder" style="color:gray"></i>
+          <% end %>
+          <%= link_to page.title, page %>
+          <small> <%= page.descendants.count if page.descendants.count > 0 %></small>
+          </strong></li>
+        <% end %>
+      </ul>
     </div>
   </div>
-</section>
 
-
-
-<% if @search_results.empty? %>
-  <p style="color:red"><em>Could not find results for
-  <% @queries.each do |q| %>
-    <strong><%= q %></strong>
-  <% end %>, try searching something else.</em> </p> <hr>
-<% @pages.each do |page| %>
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h4><strong>
-        <%= link_to page.title, page %></strong></h4>
+  <div class="col-md-9">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h5><strong><i class="fa fa-bolt"></i> Quick deep search</strong></h5>
       </div>
-      <div class="panel-body">
-        <%=raw page.content.truncate(600) %>
-      </div>
-    </div>
-  <% end %>
 
-<% elsif @queries.present? %>
-  <% @search_results.each do |page| %>
-
-   <div class="panel panel-info">
-    <div class="panel-heading">
-      <h4><strong>
-        <%= link_to page.title, page %></strong></h4>
-      </div>
-      <div class="panel-body">
-        <%=raw highlight_query_results(page.content, @queries) %>
+      <div class="panel-body text-center">
+        <div class="input-group">
+          <div class="col-md-12">
+            <%= form_tag pages_path, method: :get do %>
+              <%= text_field_tag :query, params[:query], class: "form-control", placeholder: "Search entire site" %>
+          </div>
+            <span class="input-group-btn">
+              <%= submit_tag "Search", title: nil, class: "btn btn-default" %>
+            </span>
+            <% end %>
+          </div>
       </div>
     </div>
+
+    <% if @search_results.empty? %>
+      <p style="color:red"><em>Could not find results for
+      <% @queries.each do |q| %>
+        <strong><%= q %></strong>
+      <% end %>, try searching something else.</em> </p> <hr>
+
+      <% @pages.each do |page| %>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h4><strong><%= link_to page.title, page %></strong></h4>
+          </div>
+          <div class="panel-body">
+            <%=raw page.content.truncate(600) %>
+          </div>
+        </div>
+      <% end %>
+
+    <% elsif @queries.present? %>
+      <% @search_results.each do |page| %>
+       <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4><strong><%= link_to page.title, page %></strong></h4>
+        </div>
+        <div class="panel-body">
+          <%=raw highlight_query_results(page.content, @queries) %>
+        </div>
+      </div>
      <% end %>
 
-
-<% else %>
-
+    <% else %>
 
     <div class="panel panel-info">
-
       <div class="panel-heading">
-        <h5><strong><i class="fa fa-circle-o-notch fa-spin"></i>
-          Recent Activities</strong></h5>
-        </div>
+        <h5><strong><i class="fa fa-circle-o-notch fa-spin"></i> Recent Activities</strong></h5>
+      </div>
 
-        <div class="panel-body">
-            <table class="table table-striped">
-              <% @activities.each do |activity| %>
-                <tr><%= render_activity activity %></tr>
-              <% end %>
-            </table>
-
-            <%= button_to "more activities", activities_path, method: :get, class: "btn btn-default btn-block" %>
-            <% end %>
-        </div>
-    </div>
+      <div class="panel-body">
+        <table class="table table-striped">
+          <% @activities.each do |activity| %>
+            <tr><%= render_activity activity %></tr>
+          <% end %>
+        </table>
+      </div>
+    <% end %>
+  </div>
+    <%= button_to "more activities", activities_path, method: :get, class: "btn btn-default btn-block" %>
+</div>
 
 
 
