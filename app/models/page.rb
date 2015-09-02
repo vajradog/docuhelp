@@ -1,4 +1,7 @@
 class Page < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :history
+
   include PublicActivity::Model
   tracked owner: ->(controller, model) { controller && controller.current_user }
 
@@ -25,6 +28,8 @@ class Page < ActiveRecord::Base
   def count_word
     content.split(' ').count
   end
+
+
 
 
   #def self.title_search(search)

@@ -24,6 +24,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'public_activity'
 gem "font-awesome-rails"
+gem 'friendly_id', '~> 5.1.0'
 
 
 group :development, :test do

@@ -31,6 +31,9 @@ class PagesController < ApplicationController
   def edit; end
 
   def show
+    if request.path != page_path(@page)
+      redirect_to @page, status: :moved_permanently
+    end
     @pages = Page.all
     @freq_infos = @page.freq_infos.all.order("created_at desc")
     #@freq_info = @page.freq_infos.build
@@ -61,7 +64,7 @@ class PagesController < ApplicationController
   private
 
   def set_page
-    @page = Page.find(params[:id])
+    @page = Page.friendly.find(params[:id])
   end
 
   def page_params
