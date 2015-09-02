@@ -52,8 +52,8 @@
 
     <% if @search_results.empty? %>
       <p style="color:red"><em>Could not find results for
-      <% @queries.each do |q| %>
-        <strong><%= try(:q) %></strong>
+      <% @queries.try(:each) do |q| %>
+        <strong><%= q %></strong>
       <% end %>, try searching something else.</em> </p> <hr>
 
       <% @pages.each do |page| %>
