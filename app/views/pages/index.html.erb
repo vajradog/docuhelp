@@ -68,7 +68,7 @@
       <% end %>
 
     <% elsif @queries.present? %>
-      <% @search_results.each do |page| %>
+      <% @search_results.try(:each) do |page| %>
        <div class="panel panel-info">
         <div class="panel-heading">
           <h4><strong><%= link_to page.title, page %></strong></h4>
