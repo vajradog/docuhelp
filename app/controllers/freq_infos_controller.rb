@@ -2,7 +2,7 @@ class FreqInfosController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    @page = Page.find(params[:page_id])
+    @page = Page.friendly.find(params[:page_id])
     freq_info = @page.freq_infos.build(freq_info_params)
     if freq_info.save
       flash[:notice] = "information saved"
@@ -14,7 +14,7 @@ class FreqInfosController < ApplicationController
   end
 
   def destroy
-    @page = Page.find(params[:page_id])
+    @page = Page.friendly.find(params[:page_id])
     @freq_info = @page.freq_infos.find(params[:id])
     @freq_info.delete
     flash[:notice] = "Info deleted"

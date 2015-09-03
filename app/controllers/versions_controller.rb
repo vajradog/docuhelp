@@ -26,7 +26,7 @@ class VersionsController < ApplicationController
   private
 
   def set_page_and_version
-    @page = Page.find(params[:page_id])
+    @page = Page.friendly.find(params[:page_id])
     @version = @page.versions.find(params[:id])
   end
 
