@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">Company</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,10 +44,12 @@
 
 
       <ul class="nav navbar-nav">
+        <% if user_signed_in? %>
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "New Page", new_page_path %></li>
         <li><%= link_to "Activities", activities_path %></li>
         <li><%= link_to 'See Deleted Pages', deleted_pages_path %></li>
+        <% end %>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
